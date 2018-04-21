@@ -2,6 +2,13 @@ import React from 'react';
 import moment from 'moment';
 
 class Messages extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (prevProps.messages.length !== this.props.messages.length) {
+      var element = document.getElementById("messages");
+      element.scrollTop = element.scrollHeight;
+    }
+  }
+
   formatMessageInfo(message) {
     const user = message.user
     const time = moment(message.timestamp).format('ddd HH:mm:ss')
@@ -22,8 +29,8 @@ class Messages extends React.Component {
     const {messages} = this.props;
 
     return (
-      <div style={Messages.styles.main}>
-        <div>
+      <div id="messages" style={Messages.styles.main}>
+        <div style={Messages.styles.content}>
           {messages && messages.map((message) =>
             <div style={Messages.styles.message} key={message.timestamp}>
               <span style={this.getUserColor(message.user)}>
@@ -43,13 +50,17 @@ class Messages extends React.Component {
 Messages.styles = {
   main: {
     display: "flex",
-    alignItems: "flex-end",
+    flexDirection: "column",
     flexGrow: "1",
     flexShrink: "1",
     width: "100%",
     maxWidth: "400px",
     maxHeight: "560px",
     backgroundColor: "#fff",
+    overflowY: "auto"
+  },
+  content: {
+    marginTop: "auto"
   },
   message: {
     padding: "5px",

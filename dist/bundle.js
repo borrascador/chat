@@ -39075,6 +39075,14 @@ var Messages = function (_React$Component) {
   }
 
   _createClass(Messages, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.messages.length !== this.props.messages.length) {
+        var element = document.getElementById("messages");
+        element.scrollTop = element.scrollHeight;
+      }
+    }
+  }, {
     key: 'formatMessageInfo',
     value: function formatMessageInfo(message) {
       var user = message.user;
@@ -39104,10 +39112,10 @@ var Messages = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { style: Messages.styles.main },
+        { id: 'messages', style: Messages.styles.main },
         _react2.default.createElement(
           'div',
-          null,
+          { style: Messages.styles.content },
           messages && messages.map(function (message) {
             return _react2.default.createElement(
               'div',
@@ -39135,13 +39143,17 @@ var Messages = function (_React$Component) {
 Messages.styles = {
   main: {
     display: "flex",
-    alignItems: "flex-end",
+    flexDirection: "column",
     flexGrow: "1",
     flexShrink: "1",
     width: "100%",
     maxWidth: "400px",
     maxHeight: "560px",
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    overflowY: "auto"
+  },
+  content: {
+    marginTop: "auto"
   },
   message: {
     padding: "5px"
