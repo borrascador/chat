@@ -10,12 +10,22 @@ class Chat extends React.Component {
     this.state = {
       text: ''
     };
+    this.update = this.update.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.send = this.send.bind(this);
   }
 
   componentDidMount() {
+    this.update();
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  update() {
     this.props.store.dispatch(getMessages());
+    this.timer = setTimeout(this.update, 2500);
   }
 
   handleInputChange(event) {

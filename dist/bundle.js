@@ -38875,6 +38875,7 @@ var Chat = function (_React$Component) {
     _this.state = {
       text: ''
     };
+    _this.update = _this.update.bind(_this);
     _this.handleInputChange = _this.handleInputChange.bind(_this);
     _this.send = _this.send.bind(_this);
     return _this;
@@ -38883,7 +38884,18 @@ var Chat = function (_React$Component) {
   _createClass(Chat, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.update();
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      clearTimeout(this.timer);
+    }
+  }, {
+    key: 'update',
+    value: function update() {
       this.props.store.dispatch((0, _actions.getMessages)());
+      this.timer = setTimeout(this.update, 2500);
     }
   }, {
     key: 'handleInputChange',
