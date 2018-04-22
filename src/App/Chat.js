@@ -66,7 +66,7 @@ Chat.styles = {
   },
   compose: {
     width: "100%",
-    maxWidth: "400px",
+    // maxWidth: "400px",
   }
 }
 

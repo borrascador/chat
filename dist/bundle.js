@@ -38946,8 +38946,8 @@ Chat.styles = {
     height: "100%"
   },
   compose: {
-    width: "100%",
-    maxWidth: "400px"
+    width: "100%"
+    // maxWidth: "400px",
   }
 };
 
@@ -39159,8 +39159,8 @@ Messages.styles = {
     flexGrow: "1",
     flexShrink: "1",
     width: "100%",
-    maxWidth: "400px",
-    maxHeight: "560px",
+    // maxWidth: "400px",
+    // maxHeight: "560px",
     backgroundColor: "#fff",
     overflowY: "auto"
   },

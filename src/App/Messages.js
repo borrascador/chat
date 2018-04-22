@@ -54,8 +54,8 @@ Messages.styles = {
     flexGrow: "1",
     flexShrink: "1",
     width: "100%",
-    maxWidth: "400px",
-    maxHeight: "560px",
+    // maxWidth: "400px",
+    // maxHeight: "560px",
     backgroundColor: "#fff",
     overflowY: "auto"
   },
