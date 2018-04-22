@@ -19,8 +19,8 @@ class Compose extends React.Component {
 
 Compose.styles = {
   main: {
-    height: "40px",
-    flexShrink: "0",
+    height: "100%",
+    maxHeight: "80px",
     display: "flex",
     flexDirection: "row",
   },

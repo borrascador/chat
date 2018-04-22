@@ -38946,8 +38946,10 @@ Chat.styles = {
     height: "100%"
   },
   compose: {
-    width: "100%"
-    // maxWidth: "400px",
+    flex: "1 0",
+    width: "100%",
+    maxHeight: "80px",
+    maxWidth: "800px"
   }
 };
 
@@ -39021,8 +39023,8 @@ var Compose = function (_React$Component) {
 
 Compose.styles = {
   main: {
-    height: "40px",
-    flexShrink: "0",
+    height: "100%",
+    maxHeight: "80px",
     display: "flex",
     flexDirection: "row"
   },
@@ -39156,12 +39158,11 @@ Messages.styles = {
   main: {
     display: "flex",
     flexDirection: "column",
-    flexGrow: "1",
-    flexShrink: "1",
+    flex: "5 5",
     width: "100%",
-    // maxWidth: "400px",
-    // maxHeight: "560px",
+    maxWidth: "798px",
     backgroundColor: "#fff",
+    border: "1px solid black",
     overflowY: "auto"
   },
   content: {
@@ -39248,20 +39249,16 @@ var SignIn = function (_React$Component) {
         'div',
         { style: SignIn.styles.main },
         _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'h1',
-            { style: SignIn.styles.text },
-            'Chat'
-          ),
-          _react2.default.createElement(
-            'h3',
-            { style: SignIn.styles.text },
-            'Please enter username'
-          ),
-          _react2.default.createElement(_Compose2.default, { value: this.state.text, handleInputChange: this.handleInputChange, send: this.send })
-        )
+          'h1',
+          { style: SignIn.styles.text },
+          'Chat'
+        ),
+        _react2.default.createElement(
+          'h3',
+          { style: SignIn.styles.text },
+          'Please enter username'
+        ),
+        _react2.default.createElement(_Compose2.default, { value: this.state.text, handleInputChange: this.handleInputChange, send: this.send })
       );
     }
   }]);

@@ -65,8 +65,10 @@ Chat.styles = {
     height: "100%",
   },
   compose: {
+    flex: "1 0",
     width: "100%",
-    // maxWidth: "400px",
+    maxHeight: "80px",
+    maxWidth: "800px",
   }
 }
 

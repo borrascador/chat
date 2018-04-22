@@ -28,11 +28,9 @@ class SignIn extends React.Component {
   render() {
     return (
       <div style={SignIn.styles.main}>
-        <div>
-          <h1 style={SignIn.styles.text}>Chat</h1>
-          <h3 style={SignIn.styles.text}>Please enter username</h3>
-          <Compose value={this.state.text} handleInputChange={this.handleInputChange} send={this.send} />
-        </div>
+        <h1 style={SignIn.styles.text}>Chat</h1>
+        <h3 style={SignIn.styles.text}>Please enter username</h3>
+        <Compose value={this.state.text} handleInputChange={this.handleInputChange} send={this.send} />
       </div>
     );
   }
@@ -49,7 +47,7 @@ SignIn.styles = {
   text: {
     textAlign: "center",
     paddingBottom: "15px",
-  }
+  },
 }
 
 export default SignIn;

@@ -51,12 +51,11 @@ Messages.styles = {
   main: {
     display: "flex",
     flexDirection: "column",
-    flexGrow: "1",
-    flexShrink: "1",
+    flex: "5 5",
     width: "100%",
-    // maxWidth: "400px",
-    // maxHeight: "560px",
+    maxWidth: "798px",
     backgroundColor: "#fff",
+    border: "1px solid black",
     overflowY: "auto"
   },
   content: {
