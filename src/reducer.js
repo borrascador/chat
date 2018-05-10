@@ -4,6 +4,8 @@ import {
   SEND_MESSAGE_SUCCESS,
   LOAD_MESSAGES_REQUEST,
   LOAD_MESSAGES_SUCCESS,
+  DELETE_MESSAGES_REQUEST,
+  DELETE_MESSAGES_SUCCESS,
 } from './actions';
 
 const initialState = {
@@ -11,6 +13,7 @@ const initialState = {
   messages: [],
   sending: false,
   loading: false,
+  deleting: false,
   error: null
 };
 
@@ -42,9 +45,21 @@ export default function reducer(state, action) {
       });
 
     case LOAD_MESSAGES_SUCCESS:
+      console.log(action);
       return Object.assign({}, state, {
         loading: false,
-        messages: Object.values(action.payload.messages.result)
+        messages: Object.values(action.payload.messages.result || {})
+      });
+
+    case DELETE_MESSAGES_REQUEST:
+      return Object.assign({}, state, {
+        deleting: true,
+        error: null
+      });
+
+    case DELETE_MESSAGES_SUCCESS:
+      return Object.assign({}, state, {
+        deleting: false
       });
 
     // case SOME_ERROR:

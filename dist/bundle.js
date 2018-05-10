@@ -38913,8 +38913,11 @@ var Chat = function (_React$Component) {
   }, {
     key: 'send',
     value: function send() {
-      var timestamp = +new Date();
-      this.props.store.dispatch((0, _actions.postMessageAndGetMessages)(this.state.text, timestamp));
+      if (this.state.text === "/delete") {
+        this.props.store.dispatch((0, _actions.deleteMessagesAndGetMessages)());
+      } else {
+        this.props.store.dispatch((0, _actions.postMessageAndGetMessages)(this.state.text));
+      }
       this.setState({
         text: ''
       });
@@ -39256,12 +39259,12 @@ var SignIn = function (_React$Component) {
         _react2.default.createElement(
           'h1',
           { style: SignIn.styles.text },
-          'Chat'
+          'Let\'s Chat!'
         ),
         _react2.default.createElement(
           'h3',
           { style: SignIn.styles.text },
-          'Please enter username'
+          'What\'s your name?'
         ),
         _react2.default.createElement(_Compose2.default, { value: this.state.text, handleInputChange: this.handleInputChange, send: this.send })
       );
@@ -39277,11 +39280,8 @@ SignIn.styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    height: "100%"
-  },
-  text: {
-    textAlign: "center",
-    paddingBottom: "15px"
+    height: "100%",
+    textAlign: "center"
   }
 };
 
@@ -39302,9 +39302,10 @@ exports.default = SignIn;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.LOAD_MESSAGES_SUCCESS = exports.LOAD_MESSAGES_REQUEST = exports.SEND_MESSAGE_SUCCESS = exports.SEND_MESSAGE_REQUEST = exports.setUser = exports.SET_USER = undefined;
+exports.DELETE_MESSAGES_SUCCESS = exports.DELETE_MESSAGES_REQUEST = exports.LOAD_MESSAGES_SUCCESS = exports.LOAD_MESSAGES_REQUEST = exports.SEND_MESSAGE_SUCCESS = exports.SEND_MESSAGE_REQUEST = exports.setUser = exports.SET_USER = undefined;
 exports.getMessages = getMessages;
 exports.postMessageAndGetMessages = postMessageAndGetMessages;
+exports.deleteMessagesAndGetMessages = deleteMessagesAndGetMessages;
 
 var _crossFetch = __webpack_require__(/*! cross-fetch */ "../node_modules/cross-fetch/dist/browser-ponyfill.js");
 
@@ -39351,19 +39352,33 @@ var loadMessagesSuccess = function loadMessagesSuccess(messages) {
   };
 };
 
+var DELETE_MESSAGES_REQUEST = exports.DELETE_MESSAGES_REQUEST = 'DELETE_MESSAGES_REQUEST';
+var deleteMessagesRequest = function deleteMessagesRequest() {
+  return {
+    type: DELETE_MESSAGES_REQUEST
+  };
+};
+
+var DELETE_MESSAGES_SUCCESS = exports.DELETE_MESSAGES_SUCCESS = 'DELETE_MESSAGES_SUCCESS';
+var deleteMessagesSuccess = function deleteMessagesSuccess() {
+  return {
+    type: DELETE_MESSAGES_SUCCESS
+  };
+};
+
 // export const LOAD_MESSAGES_FAILURE = 'LOAD_MESSAGES_FAILURE';
 // export const loadMessagesError = error => ({
 //   type: LOAD_MESSAGES_FAILURE,
 //   payload: { error }
 // });
 
-function postMessage(text, timestamp) {
+function postMessage(text, user) {
   return function (dispatch, getState) {
     dispatch(sendMessageRequest());
     var message = {
       text: text,
-      timestamp: timestamp,
-      user: getState().user
+      timestamp: Date.now(),
+      user: user || getState().user
     };
     return (0, _crossFetch2.default)(URL + '/messages/' + message.timestamp, {
       headers: { 'Content-type': 'application/json' },
@@ -39371,6 +39386,19 @@ function postMessage(text, timestamp) {
       body: JSON.stringify(message)
     }).then(function (response) {
       return dispatch(sendMessageSuccess());
+    }, function (error) {
+      return console.log('An error occured.', error);
+    });
+  };
+}
+
+function deleteMessages() {
+  return function (dispatch) {
+    dispatch(deleteMessagesRequest());
+    return (0, _crossFetch2.default)(URL, {
+      method: 'DELETE'
+    }).then(function (response) {
+      return dispatch(deleteMessagesSuccess());
     }, function (error) {
       return console.log('An error occured.', error);
     });
@@ -39390,10 +39418,22 @@ function getMessages() {
   };
 }
 
-function postMessageAndGetMessages(text, timestamp) {
+function postMessageAndGetMessages(text, user) {
   return function (dispatch, getState) {
-    return dispatch(postMessage(text, timestamp)).then(function () {
+    return dispatch(postMessage(text, user)).then(function () {
       return dispatch(getMessages());
+    });
+  };
+}
+
+function deleteMessagesAndGetMessages() {
+  return function (dispatch, getState) {
+    return dispatch(deleteMessages()).then(function () {
+      return dispatch(postMessageAndGetMessages("welcome to my chat app", "jan"));
+    }).then(function () {
+      return dispatch(postMessageAndGetMessages("all messages are public", "jan"));
+    }).then(function () {
+      return dispatch(postMessageAndGetMessages("type /delete to delete all messages", "jan"));
     });
   };
 }
@@ -39506,6 +39546,7 @@ var initialState = {
   messages: [],
   sending: false,
   loading: false,
+  deleting: false,
   error: null
 };
 
@@ -39537,9 +39578,21 @@ function reducer(state, action) {
       });
 
     case _actions.LOAD_MESSAGES_SUCCESS:
+      console.log(action);
       return Object.assign({}, state, {
         loading: false,
-        messages: Object.values(action.payload.messages.result)
+        messages: Object.values(action.payload.messages.result || {})
+      });
+
+    case _actions.DELETE_MESSAGES_REQUEST:
+      return Object.assign({}, state, {
+        deleting: true,
+        error: null
+      });
+
+    case _actions.DELETE_MESSAGES_SUCCESS:
+      return Object.assign({}, state, {
+        deleting: false
       });
 
     // case SOME_ERROR:

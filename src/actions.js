@@ -29,19 +29,29 @@ const loadMessagesSuccess = messages => ({
   payload: { messages }
 });
 
+export const DELETE_MESSAGES_REQUEST = 'DELETE_MESSAGES_REQUEST';
+const deleteMessagesRequest = () => ({
+  type: DELETE_MESSAGES_REQUEST
+});
+
+export const DELETE_MESSAGES_SUCCESS = 'DELETE_MESSAGES_SUCCESS';
+const deleteMessagesSuccess = () => ({
+  type: DELETE_MESSAGES_SUCCESS
+});
+
 // export const LOAD_MESSAGES_FAILURE = 'LOAD_MESSAGES_FAILURE';
 // export const loadMessagesError = error => ({
 //   type: LOAD_MESSAGES_FAILURE,
 //   payload: { error }
 // });
 
-function postMessage(text, timestamp) {
+function postMessage(text, user) {
   return (dispatch, getState) => {
     dispatch(sendMessageRequest())
     const message = {
       text: text,
-      timestamp: timestamp,
-      user: getState().user,
+      timestamp: Date.now(),
+      user: user || getState().user,
     };
     return fetch(URL + '/messages/' + message.timestamp, {
       headers: { 'Content-type': 'application/json' },
@@ -50,6 +60,19 @@ function postMessage(text, timestamp) {
     })
       .then(
         response => dispatch(sendMessageSuccess()),
+        error => console.log('An error occured.', error)
+      )
+  }
+}
+
+function deleteMessages() {
+  return (dispatch) => {
+    dispatch(deleteMessagesRequest())
+    return fetch(URL, {
+      method: 'DELETE',
+    })
+      .then(
+        response => dispatch(deleteMessagesSuccess()),
         error => console.log('An error occured.', error)
       )
   }
@@ -69,11 +92,26 @@ export function getMessages() {
   }
 }
 
-export function postMessageAndGetMessages(text, timestamp) {
+export function postMessageAndGetMessages(text, user) {
   return (dispatch, getState) => {
-    return dispatch(postMessage(text, timestamp))
+    return dispatch(postMessage(text, user))
       .then(() => {
         return dispatch(getMessages())
+      })
+  }
+}
+
+export function deleteMessagesAndGetMessages() {
+  return (dispatch, getState) => {
+    return dispatch(deleteMessages())
+      .then(() => {
+        return dispatch(postMessageAndGetMessages("welcome to my chat app", "jan"))
+      })
+      .then(() => {
+        return dispatch(postMessageAndGetMessages("all messages are public", "jan"))
+      })
+      .then(() => {
+        return dispatch(postMessageAndGetMessages("type /delete to delete all messages", "jan"))
       })
   }
 }

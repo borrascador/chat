@@ -28,8 +28,8 @@ class SignIn extends React.Component {
   render() {
     return (
       <div style={SignIn.styles.main}>
-        <h1 style={SignIn.styles.text}>Chat</h1>
-        <h3 style={SignIn.styles.text}>Please enter username</h3>
+        <h1 style={SignIn.styles.text}>Let's Chat!</h1>
+        <h3 style={SignIn.styles.text}>What's your name?</h3>
         <Compose value={this.state.text} handleInputChange={this.handleInputChange} send={this.send} />
       </div>
     );
@@ -42,12 +42,9 @@ SignIn.styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    height: "100%"
-  },
-  text: {
+    height: "100%",
     textAlign: "center",
-    paddingBottom: "15px",
-  },
+  }
 }
 
 export default SignIn;

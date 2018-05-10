@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { postMessageAndGetMessages, getMessages } from '../actions';
+import { postMessageAndGetMessages, getMessages, deleteMessagesAndGetMessages } from '../actions';
 import Messages from './Messages';
 import Compose from './Compose';
 
@@ -35,8 +35,11 @@ class Chat extends React.Component {
   }
 
   send() {
-    const timestamp = + new Date();
-    this.props.store.dispatch(postMessageAndGetMessages(this.state.text, timestamp));
+    if (this.state.text === "/delete") {
+      this.props.store.dispatch(deleteMessagesAndGetMessages());
+    } else {
+      this.props.store.dispatch(postMessageAndGetMessages(this.state.text));
+    }
     this.setState({
       text: ''
     });
