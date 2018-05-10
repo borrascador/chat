@@ -38808,7 +38808,13 @@ var App = function (_React$Component) {
 
 App.styles = {
   main: {
-    height: "100%"
+    margin: "0 auto",
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
   }
 };
 
@@ -38943,13 +38949,13 @@ Chat.styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    height: "100%"
+    height: "100%",
+    width: "100%"
   },
   compose: {
     flex: "1 0",
     width: "100%",
-    maxHeight: "80px",
-    maxWidth: "800px"
+    maxHeight: "40px"
   }
 };
 
@@ -39012,7 +39018,7 @@ var Compose = function (_React$Component) {
         _react2.default.createElement(
           'button',
           { style: Compose.styles.button, onClick: send },
-          'send'
+          '>'
         )
       );
     }
@@ -39024,7 +39030,7 @@ var Compose = function (_React$Component) {
 Compose.styles = {
   main: {
     height: "100%",
-    maxHeight: "80px",
+    maxHeight: "40px",
     display: "flex",
     flexDirection: "row"
   },
@@ -39160,7 +39166,6 @@ Messages.styles = {
     flexDirection: "column",
     flex: "5 5",
     width: "100%",
-    maxWidth: "798px",
     backgroundColor: "#fff",
     border: "1px solid black",
     overflowY: "auto"

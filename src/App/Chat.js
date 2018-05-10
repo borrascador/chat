@@ -63,12 +63,12 @@ Chat.styles = {
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
+    width: "100%"
   },
   compose: {
     flex: "1 0",
     width: "100%",
-    maxHeight: "80px",
-    maxWidth: "800px",
+    maxHeight: "40px",
   }
 }
 

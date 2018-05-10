@@ -10,7 +10,7 @@ class Compose extends React.Component {
           value={value} onChange={handleInputChange}
         />
         <button style={Compose.styles.button} onClick={send}>
-          send
+          >
         </button>
       </div>
     );
@@ -20,7 +20,7 @@ class Compose extends React.Component {
 Compose.styles = {
   main: {
     height: "100%",
-    maxHeight: "80px",
+    maxHeight: "40px",
     display: "flex",
     flexDirection: "row",
   },

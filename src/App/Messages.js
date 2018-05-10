@@ -53,7 +53,6 @@ Messages.styles = {
     flexDirection: "column",
     flex: "5 5",
     width: "100%",
-    maxWidth: "798px",
     backgroundColor: "#fff",
     border: "1px solid black",
     overflowY: "auto"
